@@ -10,9 +10,23 @@ app.get('/', function (req, res) {
   res.send('<h1>Hello World!</h1>');
 });
 
+/* Greetings */
 app.get('/greeting/:name', (req, res) => {
   const name = req.params.name
-  res.send(`Wow!Helle there, ${name}!`)
+  res.send(`Wow! Helle there, ${name}!`)
+})
+
+/* Tip Calculator */
+app.get('/tip/:total/:tipPercentage', (req, res) => {
+  const total = parseFloat(req.params.total);
+  const tipPercentage = parseFloat(req.params.tipPercentage);
+
+    if (isNaN(total) || isNaN(tipPercentage)) {
+      res.status(400).send('Invalid Input');
+    } else {
+      const tipAmount = (total * (tipPercentage / 100)).toFixed(2);
+      res.send(`${tipAmount}`);
+    }
 })
 
 // Tell the app to listen on port 3000
@@ -20,3 +34,4 @@ app.get('/greeting/:name', (req, res) => {
 app.listen(3000, function () {
   console.log('Listening on port 3000');
 });
+
